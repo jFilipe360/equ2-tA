@@ -10,7 +10,6 @@
     <h4>Resolução das raízes de uma equação de segundo grau</h4>
 </div>
 
-
 <form>
     @*
          Este comentário só será visível no Visual Studio.
@@ -18,9 +17,13 @@
     *@
     <div>
         Especifique, por favor, os coeficientes da solução: <br />
-        A: <input type="text"/> <br />
-        B: <input type="text"/> <br />
-        C: <input type="text"/> <br />
-        <input type="submit" value="Calcular"/>
+        @*
+            O ID é um identificador que é lido APENAS no browser
+            O NAME é lido no servidor
+        *@
+        A: <input type="text" id="A" name="A"/> <br />
+        B: <input type="text" id="B" name="B" /> <br />
+        C: <input type="text" id="C" name="C" /> <br />
+        <input type="submit" value="Calcular" asp-action="Resultado"/>
     </div>
 </form>
