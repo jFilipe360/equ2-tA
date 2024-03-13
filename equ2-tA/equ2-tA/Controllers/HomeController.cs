@@ -46,24 +46,41 @@ namespace equ2_tA.Controllers
              *      2º - Enviar mensagem de erro ao utilizador
              * 
              */
-            double delta;
-            string x1, x2;
 
+            //------Declaração de variáveis--------------
+
+            //delta será o radicando da equação
+            double delta;
+
+            //variáveis auxiliares para guardar o valor do cálculo
+            string x1, x2;
+            //-------------------------------------------
+
+
+            //verificar se A, B e C são valores numéricos
             if (double.TryParse(A, out double dA))
             {
                 if (double.TryParse(B, out double dB))
                 {
                     if (double.TryParse(C, out double dC))
                     {
+                        //verificar se A é diferente de 0
                         if(dA != 0)
                         {
+                            //b^2-4*a*c
                             delta = Math.Pow(dB, 2) - (4 * dA * dC);
 
+                            /* 
+                             * Verifica se o delta é positivo ou nulo.
+                             * Se não for, as raízes serão números complexos.
+                             */
                             if(delta >= 0)
                             {
-                                x1 = (-dB + Math.Sqrt(delta)) / (2 * dA) + "";
-                                x2 = (-dB - Math.Sqrt(delta)) / (2 * dA) + "";
+                                //cálculo da raiz, (-b +-delta)/(2*a)
+                                x1 = Math.Round((-dB + Math.Sqrt(delta)) / (2 * dA),3) + "";
+                                x2 = Math.Round((-dB - Math.Sqrt(delta)) / (2 * dA),3) + "";
 
+                                //guardar o resultado numa viewBag para enviar os resultados para a view 
                                 ViewBag.Res1 = x1;
                                 ViewBag.Res2 = x2;
 
@@ -71,9 +88,11 @@ namespace equ2_tA.Controllers
                             }
                             else
                             {
+                                //cálculo da raiz para números complexos
                                 x1 = Math.Round((-dB) / 2 / dA, 3) + " + " + Math.Round(Math.Sqrt(-delta) / 2 / dA, 3) + " i";
                                 x2 = Math.Round((-dB) / 2 / dA, 3) + " - " + Math.Round(Math.Sqrt(-delta) / 2 / dA, 3) + " i";
 
+                                //guardar o resultado numa viewBag para enviar os resultados para a view 
                                 ViewBag.Res1 = x1;
                                 ViewBag.Res2 = x2;
 
@@ -82,21 +101,25 @@ namespace equ2_tA.Controllers
                         }
                         else
                         {
-                            return BadRequest("A tem de ser diferente de 0!");
+                            //mensagem de erro para A!=0
+                            return BadRequest("A tem de ser diferente de 0 (zero)!");
                         }
                     }
                     else
                     {
+                        //mensagem de erro para C != valor numérico
                         return BadRequest("C não é um número!");
                     }
                 }
                 else
                 {
+                    //mensagem de erro para B != valor numérico
                     return BadRequest("B não é um número!");
                 }
             }
             else
             {
+                //mensagem de erro para A != valor numérico
                 return BadRequest("A não é um número!");
             }
         }
