@@ -46,24 +46,39 @@ namespace equ2_tA.Controllers
              *      2º - Enviar mensagem de erro ao utilizador
              * 
              */
-            double dA, dB, dC;
-            double x1, x2;
+            double delta;
+            string x1, x2;
 
-            if (double.TryParse(A, out dA))
+            if (double.TryParse(A, out double dA))
             {
-                if (double.TryParse(B, out dB))
+                if (double.TryParse(B, out double dB))
                 {
-                    if (double.TryParse(C, out dC))
+                    if (double.TryParse(C, out double dC))
                     {
                         if(dA != 0)
                         {
-                            x1 = (-dB + Math.Sqrt(Math.Pow(dB, 2) - (4 * dA * dC))) / (2 * dA);
-                            x2 = (-dB - Math.Sqrt(Math.Pow(dB, 2) - (4 * dA * dC))) / (2 * dA);
+                            delta = Math.Pow(dB, 2) - (4 * dA * dC);
 
-                            ViewBag.X1 = x1;
-                            ViewBag.X2 = x2;
+                            if(delta >= 0)
+                            {
+                                x1 = (-dB + Math.Sqrt(delta)) / (2 * dA) + "";
+                                x2 = (-dB - Math.Sqrt(delta)) / (2 * dA) + "";
 
-                            return View("Resultado");
+                                ViewBag.Res1 = x1;
+                                ViewBag.Res2 = x2;
+
+                                return View();
+                            }
+                            else
+                            {
+                                x1 = Math.Round((-dB) / 2 / dA, 3) + " + " + Math.Round(Math.Sqrt(-delta) / 2 / dA, 3) + " i";
+                                x2 = Math.Round((-dB) / 2 / dA, 3) + " - " + Math.Round(Math.Sqrt(-delta) / 2 / dA, 3) + " i";
+
+                                ViewBag.Res1 = x1;
+                                ViewBag.Res2 = x2;
+
+                                return View();
+                            }
                         }
                         else
                         {
